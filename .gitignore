@@ -1,0 +1,25 @@
+# secrets — never commit
+.env
+.env.*
+*.key
+*.pem
+secrets.json
+
+# python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+*.egg-info/
+
+# test / tooling caches
+.pytest_cache/
+.hypothesis/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# os
+.DS_Store
+Thumbs.db

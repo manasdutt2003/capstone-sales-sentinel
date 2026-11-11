@@ -1,0 +1,21 @@
+# generated
+output/
+.claude/state/
+.coverage
+.coverage.*
+htmlcov/
+.hypothesis/
+.pytest_cache/
+__pycache__/
+*.pyc
+mutants/
+
+# secrets - never commit
+.env
+.env.*
+*.pem
+*.key
+
+# local
+.venv/
+.claude/settings.local.json

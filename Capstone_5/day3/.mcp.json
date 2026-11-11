@@ -1,0 +1,10 @@
+{
+  "mcpServers": {
+    "sales-dq": {
+      "type": "stdio",
+      "command": "python",
+      "args": ["${CLAUDE_PROJECT_DIR:-.}/tools/mcp_server/dq_server.py"],
+      "env": {}
+    }
+  }
+}

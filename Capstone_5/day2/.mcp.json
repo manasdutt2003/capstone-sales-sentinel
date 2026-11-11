@@ -1,0 +1,16 @@
+{
+  "mcpServers": {
+    "text-tools": {
+      "type": "stdio",
+      "command": "uv",
+      "args": [
+        "run",
+        "--with",
+        "mcp[cli]<2",
+        "python",
+        "tools/mcp/server.py"
+      ],
+      "env": {}
+    }
+  }
+}

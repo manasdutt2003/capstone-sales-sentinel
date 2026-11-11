@@ -1,0 +1,26 @@
+{
+  "_doc": "Single source of truth for who may write where. Read by guard_boundaries.py (PreToolUse). Paths are project-relative POSIX globs (fnmatch: * also matches /). 'deny' wins over 'write'.",
+  "always_deny": ["data/*", "output/*", ".env", ".env.*", "*/.env", "*/.env.*", "*.pem", "*.key"],
+  "roles": {
+    "coder": {
+      "write": ["src/*", "config/*", "DECISIONS.md", "TO-DO.md"],
+      "deny": ["tests/*", "SPEC.md", ".claude/*", ".mcp.json", "tools/*"],
+      "why": "The coder implements SPEC.md in src/. It must never weaken the tests that judge it, the spec that defines it, or the hooks that guard it."
+    },
+    "tester": {
+      "write": ["tests/*", "TO-DO.md"],
+      "deny": ["src/*", "config/*", "SPEC.md", ".claude/*", ".mcp.json", "tools/*", "DECISIONS.md"],
+      "why": "The tester writes tests from SPEC.md only. It must never 'fix' the code to make its own tests pass."
+    },
+    "orchestrator": {
+      "write": ["*"],
+      "deny": ["src/*", "tests/*"],
+      "why": "The main session plans and delegates: src/ goes to the coder agent, tests/ to the tester agent. Set SENTINEL_HUMAN_OVERRIDE=1 for a deliberate human edit."
+    },
+    "readonly": {
+      "write": [],
+      "deny": ["*"],
+      "why": "Any other subagent (Explore, Plan, ...) is read-only in this project."
+    }
+  }
+}

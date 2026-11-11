@@ -1,0 +1,6 @@
+# Runtime needs nothing beyond Python >= 3.11. These are for tests, coverage and the MCP server.
+pytest>=8
+pytest-cov>=5
+coverage>=7.10
+hypothesis>=6
+mcp>=1.2

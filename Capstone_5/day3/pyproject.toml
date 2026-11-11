@@ -1,0 +1,25 @@
+[project]
+name = "sales-sentinel"
+version = "1.0.0"
+description = "Ledger-first automated cleaning of daily retail sales CSVs"
+requires-python = ">=3.11"
+dependencies = []          # runtime is standard-library only
+
+[project.optional-dependencies]
+dev = ["pytest>=8", "pytest-cov>=5", "hypothesis>=6"]
+mcp = ["mcp>=1.2"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src", "tests"]
+addopts = "-ra"
+
+[tool.coverage.run]
+source = ["src/sentinel"]
+branch = true
+patch = ["subprocess"]
+parallel = true
+
+[tool.coverage.report]
+show_missing = true
+skip_covered = true

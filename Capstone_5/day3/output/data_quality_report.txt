@@ -1,0 +1,126 @@
+==================================================================
+ SALES DATA QUALITY REPORT  -  sales-sentinel v1.0.0
+==================================================================
+Input file     : sample_sales_data.csv  (sha256 15c0cd8fcfca..., utf-8-sig)
+Business date  : 2026-10-21  [inferred (modal date)]
+Policies       : dedupe=content, missing_amount=group_median, date_order=MDY
+Run at (UTC)   : 2026-10-22T18:48:30+00:00
+
+--- REQUIRED SUMMARY ---------------------------------------------
+Rows processed: 200
+Rows removed: 70 (duplicates)
+Nulls filled: 32
+Invalid entries fixed/skipped: 11 (fixed 5, skipped 6)
+Overall data quality score: 90.0/100 (A)
+
+--- ROW RECONCILIATION (every row has exactly one fate) ----------
+  200 processed = 124 kept + 70 duplicates + 6 quarantined   [BALANCED]
+  kept breakdown : clean 87 | repaired 5 | imputed 32
+
+--- SCORE BREAKDOWN (raw input health, DAMA dimensions) ----------
+  completeness    96.8%   weight 0.30
+  validity        99.4%   weight 0.30
+  consistency     99.5%   weight 0.15
+  uniqueness      65.0%   weight 0.25
+  overall         90.0    grade A
+
+--- ISSUES BY CODE -----------------------------------------------
+  [errors -> quarantined]
+    BAD_AMOUNT                2  amount is not a number
+    BAD_DATE                  1  date missing, unparseable or impossible
+    NEGATIVE_AMOUNT           1  negative amount (refund/reversal, not a sale)
+    ZERO_AMOUNT               2  zero amount (void/test scan)
+  [duplicates -> removed]
+    DUPLICATE_CONTENT        70  same date/amount/store/category as an earlier row
+  [repairs -> kept]
+    AMOUNT_IMPUTED           32  missing amount filled with group median
+    DATE_REFORMATTED          5  date converted to ISO YYYY-MM-DD
+  [warnings -> kept, review]
+    IMPUTED_KEY_COLLISION    43  imputed row matches an observed row's content key
+    OUTLIER_AMOUNT            4  amount is a robust-z outlier within its category (kept)
+
+--- DUPLICATE CLUSTERS -------------------------------------------
+  2026-10-21    150.50 S001 Electronics  x53  kept id 1, removed revenue 7826.00  <-- suspected POS replay burst
+  2026-10-21    150.50 S001 Clothing     x12  kept id 65, removed revenue 1655.50  <-- suspected POS replay burst
+  2026-10-21    150.50 S001 Grocery      x6   kept id 59, removed revenue 752.50  <-- suspected POS replay burst
+  2026-10-21    280.50 S001 Electronics  x2   kept id 117, removed revenue 280.50
+  2026-10-21     45.00 S001 Clothing     x2   kept id 2, removed revenue 45.00
+
+--- MONEY RECONCILIATION -----------------------------------------
+  raw parseable total         47619.74
+  - duplicates removed        10559.50
+  - quarantined                  75.00
+  + imputed (estimated)       10175.76
+  = clean total               47161.00   [BALANCED]
+  observed (non-imputed) revenue in clean file: 36985.24
+
+--- WARNINGS (rows kept, human review suggested) -----------------
+  line 4    id 3      OUTLIER_AMOUNT           robust_z=12.8
+  line 6    id 5      IMPUTED_KEY_COLLISION    store_category_median S002/Clothing n=7; key shared with id 87
+  line 18   id 17     IMPUTED_KEY_COLLISION    store_category_median S001/Electronics n=7; key shared with id 93
+  line 19   id 18     IMPUTED_KEY_COLLISION    key shared with imputed id 64
+  line 29   id 28     IMPUTED_KEY_COLLISION    store_category_median S002/Electronics n=7; key shared with id 58
+  line 33   id 32     IMPUTED_KEY_COLLISION    key shared with imputed id 123
+  line 37   id 36     IMPUTED_KEY_COLLISION    store_category_median S004/Electronics n=7; key shared with id 136
+  line 42   id 41     IMPUTED_KEY_COLLISION    key shared with imputed id 57
+  line 43   id 42     IMPUTED_KEY_COLLISION    key shared with imputed id 85
+  line 47   id 46     IMPUTED_KEY_COLLISION    store_category_median S001/Grocery n=5; key shared with id 184
+  line 53   id 52     IMPUTED_KEY_COLLISION    key shared with imputed id 108
+  line 58   id 57     IMPUTED_KEY_COLLISION    store_category_median S005/Clothing n=3; key shared with id 41
+  line 59   id 58     IMPUTED_KEY_COLLISION    key shared with imputed id 28
+  line 65   id 64     IMPUTED_KEY_COLLISION    store_category_median S002/Grocery n=5; key shared with id 18
+  line 73   id 72     IMPUTED_KEY_COLLISION    store_category_median S002/Grocery n=5; key shared with id 18
+  line 80   id 79     IMPUTED_KEY_COLLISION    store_category_median S002/Electronics n=7; key shared with id 58
+  line 86   id 85     IMPUTED_KEY_COLLISION    store_category_median S003/Grocery n=9; key shared with id 42
+  line 88   id 87     IMPUTED_KEY_COLLISION    key shared with imputed id 5
+  line 90   id 89     OUTLIER_AMOUNT           robust_z=4.1
+  line 92   id 91     IMPUTED_KEY_COLLISION    store_category_median S004/Clothing n=8; key shared with imputed id 118
+  line 94   id 93     IMPUTED_KEY_COLLISION    key shared with imputed id 17
+  line 98   id 97     IMPUTED_KEY_COLLISION    store_category_median S005/Clothing n=3; key shared with id 41
+  line 104  id 103    IMPUTED_KEY_COLLISION    store_category_median S003/Electronics n=6; key shared with imputed id 113
+  line 109  id 108    IMPUTED_KEY_COLLISION    store_category_median S001/Clothing n=7; key shared with id 52
+  line 111  id 110    IMPUTED_KEY_COLLISION    key shared with imputed id 127
+  line 114  id 113    IMPUTED_KEY_COLLISION    store_category_median S003/Electronics n=6; key shared with id 103
+  line 116  id 115    IMPUTED_KEY_COLLISION|OUTLIER_AMOUNT key shared with imputed id 157; robust_z=3.9
+  line 119  id 118    IMPUTED_KEY_COLLISION    store_category_median S004/Clothing n=8; key shared with id 91
+  line 124  id 123    IMPUTED_KEY_COLLISION    store_category_median S005/Electronics n=11; key shared with id 32
+  line 128  id 127    IMPUTED_KEY_COLLISION    category_median Grocery n=23; key shared with id 110
+  line 133  id 132    IMPUTED_KEY_COLLISION    store_category_median S005/Clothing n=3; key shared with id 41
+  line 137  id 136    IMPUTED_KEY_COLLISION    key shared with imputed id 36
+  line 138  id 137    IMPUTED_KEY_COLLISION    store_category_median S003/Grocery n=9; key shared with id 42
+  line 143  id 142    IMPUTED_KEY_COLLISION    store_category_median S001/Clothing n=7; key shared with id 52
+  line 148  id 147    IMPUTED_KEY_COLLISION    store_category_median S002/Grocery n=5; key shared with id 18
+  line 153  id 152    IMPUTED_KEY_COLLISION    store_category_median S004/Clothing n=8; key shared with id 91
+  line 155  id 154    OUTLIER_AMOUNT           robust_z=3.8
+  line 158  id 157    IMPUTED_KEY_COLLISION    store_category_median S005/Grocery n=3; key shared with id 115
+  line 168  id 167    IMPUTED_KEY_COLLISION    store_category_median S001/Grocery n=5; key shared with id 184
+  line 173  id 172    IMPUTED_KEY_COLLISION    store_category_median S002/Clothing n=7; key shared with id 87
+  line 178  id 177    IMPUTED_KEY_COLLISION    category_median Grocery n=23; key shared with id 110
+  line 183  id 182    IMPUTED_KEY_COLLISION    store_category_median S005/Clothing n=3; key shared with id 41
+  line 185  id 184    IMPUTED_KEY_COLLISION    key shared with imputed id 46
+  line 188  id 187    IMPUTED_KEY_COLLISION    store_category_median S003/Grocery n=9; key shared with id 42
+  line 193  id 192    IMPUTED_KEY_COLLISION    store_category_median S001/Clothing n=7; key shared with id 52
+  line 198  id 197    IMPUTED_KEY_COLLISION    store_category_median S002/Grocery n=5; key shared with id 18
+
+--- QUARANTINED ROWS (sent back to source) -----------------------
+  line 11   BAD_AMOUNT                   raw: 10,2026-10-21,abc,S001,Grocery
+  line 14   NEGATIVE_AMOUNT              raw: 13,2026-10-21,-50.00,S002,Electronics
+  line 22   BAD_DATE                     raw: 21,invalid,125.00,S001,Grocery
+  line 39   BAD_AMOUNT                   raw: 38,2026-10-21,xyz,S001,Clothing
+  line 45   ZERO_AMOUNT                  raw: 44,2026-10-21,0.00,S002,Clothing
+  line 69   ZERO_AMOUNT                  raw: 68,2026-10-21,0,S001,Grocery
+
+--- OUTPUT CONFIDENCE --------------------------------------------
+  yield (kept / processed)       62.0%
+  kept rows untouched            70.2%
+  kept rows repaired (format)     4.0%
+  kept rows with imputed amount  25.8%
+  quarantine rate                 3.0%
+
+--- FILES --------------------------------------------------------
+  clean_sales.csv            only valid, cleaned rows
+  quarantine.csv             rejected rows, raw values + reasons
+  row_ledger.csv             fate of every input row
+  data_quality_report.txt    this report
+  run_manifest.json          hashes + effective config for reproducibility
+==================================================================

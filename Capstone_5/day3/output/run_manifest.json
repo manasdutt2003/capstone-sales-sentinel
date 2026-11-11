@@ -1,0 +1,71 @@
+{
+  "tool": "sales-sentinel",
+  "version": "1.0.0",
+  "run_at_utc": "2026-10-22T18:48:30+00:00",
+  "input": {
+    "name": "sample_sales_data.csv",
+    "sha256": "15c0cd8fcfca8d9f4a0c552ddda26dac3b5399c33170e3ca145a394bbb9a979b",
+    "encoding": "utf-8-sig"
+  },
+  "config": {
+    "path": "pipeline.toml",
+    "sha256": "88a9002ed5550344e11dd52f70f663b42c6172c73475b0080ddf8b7a4d888bfd",
+    "effective": {
+      "date_order": "MDY",
+      "business_date": null,
+      "max_age_days": 7,
+      "future_tolerance_days": 0,
+      "max_amount": "100000.00",
+      "missing_strategy": "group_median",
+      "min_group_size": 3,
+      "outlier_z": 3.5,
+      "dedupe_policy": "content",
+      "burst_threshold": 5,
+      "categories": [
+        "Electronics",
+        "Clothing",
+        "Grocery"
+      ],
+      "category_aliases": {
+        "electronic": "Electronics",
+        "electronics": "Electronics",
+        "apparel": "Clothing",
+        "clothes": "Clothing",
+        "groceries": "Grocery",
+        "food": "Grocery"
+      },
+      "weights": {
+        "completeness": 0.3,
+        "validity": 0.3,
+        "consistency": 0.15,
+        "uniqueness": 0.25
+      },
+      "max_quarantine_rate": 0.1,
+      "min_score": 60.0
+    }
+  },
+  "business_date": "2026-10-21",
+  "counts": {
+    "processed": 200,
+    "kept": 124,
+    "duplicates_removed": 70,
+    "quarantined": 6,
+    "nulls_filled": 32,
+    "fixed": 5
+  },
+  "score": {
+    "overall": 90.0,
+    "grade": "A"
+  },
+  "money": {
+    "raw_total": "47619.74",
+    "clean_total": "47161.00",
+    "balanced": true
+  },
+  "outputs_sha256": {
+    "clean_sales.csv": "5f3bae3b2002f522ba4767f2466b7df7a933d0b398e312eadde9005d6d071fbc",
+    "quarantine.csv": "e4be4a62b08462a8f405a95ecedc82abf53cdc422f0045d29c3cc99eddf80dec",
+    "row_ledger.csv": "3d72b541a2a7e56aebb54608386e872610d3614d53f9c59b1890e2437a78bb21",
+    "data_quality_report.txt": "c5b20e39bbc83ccf2fe9e426a98af09cadaa3f092a5c32259844463cb3178f01"
+  }
+}

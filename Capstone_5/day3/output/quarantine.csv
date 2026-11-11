@@ -1,0 +1,7 @@
+line_no,transaction_id,date,amount,store_id,category,reason_codes
+11,10,2026-10-21,abc,S001,Grocery,BAD_AMOUNT
+14,13,2026-10-21,-50.00,S002,Electronics,NEGATIVE_AMOUNT
+22,21,invalid,125.00,S001,Grocery,BAD_DATE
+39,38,2026-10-21,xyz,S001,Clothing,BAD_AMOUNT
+45,44,2026-10-21,0.00,S002,Clothing,ZERO_AMOUNT
+69,68,2026-10-21,0,S001,Grocery,ZERO_AMOUNT

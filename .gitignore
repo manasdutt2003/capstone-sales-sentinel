@@ -23,3 +23,6 @@ htmlcov/
 # os
 .DS_Store
 Thumbs.db
+
+# Backup copies of git metadata
+_git_backup/
